@@ -95,25 +95,39 @@ The following screenshot displays the result of running `docker ps` after succes
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
-- _TODO: List the IP addresses of the machines you are monitoring_
+
+- 10.0.0.10, 10.0.0.11, 10.0.0.12
 
 We have installed the following Beats on these machines:
-- _TODO: Specify which Beats you successfully installed_
+- Filebeat and Metricbeat
 
 These Beats allow us to collect the following information from each machine:
-- _TODO: In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
+-Filebeat is often used to forward and centralize log data. Filebeat monitors log files, collects log events, and tracks log-on datas
+
+- Metricbeat collects metrics from the OS and services running on the server. Metricbeat allow us to monitor the network and fowards collects information to a specified output
+
 
 ### Using the Playbook
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
-- Copy the _____ file to _____.
-- Update the _____ file to include...
-- Run the playbook, and navigate to ____ to check that the installation worked as expected.
+- Copy the filebeat.yml file to the VM where the Filebeat was installed.
+- Update the filebeat-playbook.yml file to include the Private IP of the Elk-Server
+- Run the playbook, and navigate to ELk-Server to check that the installation worked as expected.
 
-_TODO: Answer the following questions to fill in the blanks:_
-- _Which file is the playbook? Where do you copy it?_
-- _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
-- _Which URL do you navigate to in order to check that the ELK server is running?
+## Other
+- filebeat-playbook.ym is the playbook and is copied from the Ansible container
+- You update the filebeat.yml to make Ansible run the playbook on a specific machine and do the following to specify which machine to install the ELK server on versus which to install Filebeat on: When you update the host.cfg file in the ansible directory you will need to create a new group called [elkservers] and add the Private IP of the Elk-Server to the group. Then while configuring the filebeat.yml file you have to specify the Private IP of the Elk-Server in two lines of the ".yml" file.
+- Navigate to http://[your.VM.IP]:5601/app/kibana in order to check that the ELK server is running
 
-_As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
+### Bonus
+
+- ssh RedAdmin@JumpBox(PrivateIP)
+- sudo docker container list -a (locate your ansible container)
+- sudo docker start container (name of the container)
+- sudo docker attach container (name of the container)
+- cd /etc/ansible/
+- ansible-playbook elk.yml (configures Elk-Server and starts the Elk container on the Elk-Server) wait a couple minutes for the implementation of the Elk-Server
+- cd /etc/ansible/roles/
+- ansible-playbook filebeat-playbook.yml (installs Filebeat and Metricbeat)
+- open a new web browser (Elk-Server PublicIP:5601) This will bring up the Kibana Web Portal
