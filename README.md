@@ -8,18 +8,20 @@ The files in this repository were used to configure the network depicted below.
 
 These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the Ansible Configuration file may be used to install only certain pieces of it, such as Filebeat.
 
-# Playbook file
-name: Config Web Virtual Machine with Docker hosts
-      webservers become: true tasks
-      docker.io apt: update_cache: yes 
+# Playbook File
+name: Config Web VM with Docker hosts: webservers 
+become: true tasks
+name: docker.io apt: 
+      update_cache: yes 
       docker.io state: present
-      Install pip3 apt:
+name: Install pip3 apt 
       python3-pip state: present
-      Install Docker python module pip: 
-      docker state: present
-      download and launch a docker web container docker_container: 
-      dvwa image: cyberxsecurity/dvwa state: started restart_policy: always published_ports: 80:80
-      Enable docker service systemd: name: docker enabled: yes
+name: Install Docker python module pip
+name: docker state: present
+name: download and launch a docker web container docker_container 
+name: dvwa image: cyberxsecurity/dvwa state: started restart_policy: always published_ports: 80:80
+name: Enable docker service systemd: 
+      docker enabled: yes
 
 This document contains the following details:
 
@@ -35,22 +37,24 @@ This document contains the following details:
 
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
 
-Load balancing ensures that the application will be highly _____, in addition to restricting _____ to the network.
-- _TODO: What aspect of security do load balancers protect? What is the advantage of a jump box?_
+Load balancing ensures that the application will be highly available, in addition to restricting access to the network.
+
+- The security aspects that load balancers protect the internal network of VMs allowing availability of security in regards to the CIA Triad model.
+- The advantage of a JumpBox is the orgination point for launching Administrative Tasks preventing Virtual Machines to be exposed to public. This ultimately sets the JumpBox as a Secure Admin Workstation. All Administrators when conducting any Task will be required to connect to the JumpBox which actually opens one port instead of multiple ones.
 
 Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the _____ and system _____.
-- _TODO: What does Filebeat watch for?_
-- _TODO: What does Metricbeat record?_
+- Filebeat watches for log files/locations and collects log events
+- Metricbeat records metric and statistical data from the operating system and from services running on the server.
 
-The configuration details of each machine may be found below.
-_Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdown_tables) to add/remove values from the table_.
+The configuration details of each machine may be found below. (http://www.tablesgenerator.com/markdown_tables)
 
-| Name     | Function | IP Address | Operating System |
-|----------|----------|------------|------------------|
-| Jump Box | Gateway  | 10.0.0.1   | Linux            |
-| TODO     |          |            |                  |
-| TODO     |          |            |                  |
-| TODO     |          |            |                  |
+|    Name    	|   Function  	| Private IP   address 	|  Operating   System  	|
+|:----------:	|:-----------:	|:--------------------:	|:--------------------:	|
+| ELK Server 	|     Elk     	|       10.2.0.4       	| Linux (ubuntu 18.04) 	|
+|  Web-VM 1  	| Docker-DVWA 	|       10.0.0.10      	| Linux (ubuntu 18.04) 	|
+|  Web-VM 2  	| Docker-DVWA 	|       10.0.0.11      	| Linux (ubuntu 18.04) 	|
+|  Web-VM 3  	| Docker-DVWA 	|       10.0.0.12      	| Linux (ubuntu 18.04) 	|
+|  Jump Box  	|   Ansible   	|       10.0.0.4       	| Linux (ubuntu 18.04) 	|
 
 ### Access Policies
 
