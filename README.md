@@ -6,11 +6,23 @@ The files in this repository were used to configure the network depicted below.
 
 ![TODO: Update the path with the name of your diagram](SemehoQuadjovieHW12.png)
 
-These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the _____ file may be used to install only certain pieces of it, such as Filebeat.
+These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the Ansible Configuration file may be used to install only certain pieces of it, such as Filebeat.
 
-  - _TODO: Enter the playbook file._
+# Playbook file
+name: Config Web Virtual Machine with Docker hosts
+      webservers become: true tasks
+      docker.io apt: update_cache: yes 
+      docker.io state: present
+      Install pip3 apt:
+      python3-pip state: present
+      Install Docker python module pip: 
+      docker state: present
+      download and launch a docker web container docker_container: 
+      dvwa image: cyberxsecurity/dvwa state: started restart_policy: always published_ports: 80:80
+      Enable docker service systemd: name: docker enabled: yes
 
 This document contains the following details:
+
 - Description of the Topologu
 - Access Policies
 - ELK Configuration
